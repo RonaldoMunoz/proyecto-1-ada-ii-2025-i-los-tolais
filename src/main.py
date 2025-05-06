@@ -1,25 +1,37 @@
 import sys
-import re
-from utils import choose_input_file
-from lps import solve_lps
-from party import solve_party
+from tkinter.filedialog import askopenfilename
+from tkinter import Tk
+
+from ejercicios.lps.lps_dynamic import solve_lps_dp
+from ejercicios.lps.lps_brute import solve_lps_brute
+from ejercicios.lps.lps_voraz import solve_lps_greedy
 
 def main():
-    try:
-        path = choose_input_file()
-    except FileNotFoundError as e:
-        print(e, file=sys.stderr)
+    Tk().withdraw()
+    file = askopenfilename(title="Selecciona el archivo de entrada")
+    if not file:
+        print("No se seleccionó archivo.", file=sys.stderr)
         return
-    with open(path, encoding='utf-8') as f:
-        lines = [l.rstrip('\n') for l in f]
+    with open(file, encoding='utf-8') as f:
+        lines = [line.strip() for line in f if line.strip()]
 
-    # detectamos tipo de problema
-    if re.search('[A-Za-z]', lines[1]):
-        result = solve_lps(lines)
-    else:
-        result = solve_party(lines)
+    # Detectar si es LPS (n seguido de n líneas)
+    is_lps = False
+    try:
+        n0 = int(lines[0])
+        if len(lines) - 1 == n0:
+            is_lps = True
+    except ValueError:
+        pass
 
-    print('\n'.join(result))
+    if is_lps:
+        # Selecciona el método aquí:
+        #results = solve_lps_brute(lines) # programación dinámica
+        #results = solve_lps_dp(lines)  # fuerza bruta
+        results = solve_lps_greedy(lines) # voraz
+
+        for result in results:
+            print(result)
 
 if __name__ == '__main__':
     main()
