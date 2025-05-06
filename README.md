@@ -5,7 +5,7 @@
 
 Nombre completo | Código
 Yeifer Ronaldo Muñoz Valencia | 2278665
-Juan Carlos Rojas Quintero | 123457
+Juan Carlos Rojas Quintero | 2359358
 Michael Steven Rodriguez Arana | 2266193
 
 ## Descripción del taller
