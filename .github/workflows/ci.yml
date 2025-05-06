@@ -26,6 +26,7 @@ jobs:
 
       - name: Run Tests
         run: |
+          export PYTHONPATH=$(pwd)/src  # Agregar src al PYTHONPATH
           pytest --cov=./ > result.log || true
 
       - name: Generate Coverage Report
